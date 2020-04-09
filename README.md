@@ -20,3 +20,5 @@ Perinteisesti tietovarastoissa on projektista kertova README.md-tiedosto. Korvaa
 siksi tämän tiedoston sisältö tekstillä, jossa kuvailet ohjelmaasi omin sanoin.
 Kerro lyhyesti mitä ohjelma tekee ja kuinka sitä käytetään. Käytä tekstissä
 muotoiluja. Tämän dokumentin mittainen teksti riittää hyvin.
+
+Testi
