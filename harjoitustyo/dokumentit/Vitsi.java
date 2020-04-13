@@ -10,5 +10,5 @@ package harjoitustyo.dokumentit;
  * @author Miia
  */
 public class Vitsi extends Dokumentti{
-    
+    private String laji; //Ei null tai ""
 }
