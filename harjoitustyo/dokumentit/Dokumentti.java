@@ -9,22 +9,31 @@ package harjoitustyo.dokumentit;
  *
  * @author Miia
  */
-public class Dokumentti {
-    private int tunniste; //Oltava >0
-    private String teksti; //Ei saa olla null tai ""
+public abstract class Dokumentti {
+    //Attribuutit
+    private int tunniste; 
+    private String teksti; 
     
     //Rakentajat
-    public void tunniste(int uusiTunniste) {
+    //NÄITÄ EI VISSIIN PITÄISI OLLA????
+    public void tunniste(int uusiTunniste) throws IllegalArgumentException {
         if (uusiTunniste > 0) {
             tunniste = uusiTunniste;
         }
+        else {
+            throw new IllegalArgumentException();
+        }
     }
-    public void teksti(String uusiTeksti) {
+    public void teksti(String uusiTeksti) throws IllegalArgumentException {
         if (uusiTeksti != null && !uusiTeksti.equals("")){
             teksti = uusiTeksti;
         }
+        else {
+            throw new IllegalArgumentException();
+        }
     }
     
+    //Aksessorit
     public int tunniste() {
         return tunniste;
     }

@@ -5,10 +5,28 @@
  */
 package harjoitustyo.dokumentit;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Miia
  */
 public class Uutinen extends Dokumentti {
+    //Attribuutti
+    private LocalDate päivämäärä; //ei null
     
+    //Rakentaja
+    public void päivämäärä(LocalDate uusiPvm) throws IllegalArgumentException{
+        if (uusiPvm != null) {
+            päivämäärä = uusiPvm;
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+    
+    //Aksessori
+    public LocalDate päivämäärä(){
+        return päivämäärä;
+    }
 }
