@@ -52,8 +52,15 @@ public abstract class Dokumentti {
         return tunniste+"///"+teksti;
     }
 
-    //@Override
-    //public boolean equals(Dokumentti eka, Dokumentti toka) {
-    //    int ekaTunniste = eka.tunniste();
-    //}
+    @Override
+    public boolean equals(Object toinen) {
+        try {
+            Dokumentti toinenDokumentti = (Dokumentti)toinen;
+
+            return tunniste == toinenDokumentti.tunniste();
+        }
+        catch (Exception e) {
+            return false;
+        }      
+    }
 }
