@@ -16,6 +16,12 @@ public class Uutinen extends Dokumentti {
     private LocalDate päivämäärä; //ei null
     
     //Rakentaja
+    public Uutinen(int uusiTunniste, LocalDate uusiPvm, String uusiTeksti) {
+        super(uusiTunniste, uusiTeksti);
+        päivämäärä(uusiPvm);
+    }
+
+    //Aksessorit päivämäärä-attribuutille
     public void päivämäärä(LocalDate uusiPvm) throws IllegalArgumentException{
         if (uusiPvm != null) {
             päivämäärä = uusiPvm;
@@ -24,8 +30,6 @@ public class Uutinen extends Dokumentti {
             throw new IllegalArgumentException();
         }
     }
-    
-    //Aksessori
     public LocalDate päivämäärä(){
         return päivämäärä;
     }
