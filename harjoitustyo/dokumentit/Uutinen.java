@@ -33,4 +33,14 @@ public class Uutinen extends Dokumentti {
     public LocalDate päivämäärä(){
         return päivämäärä;
     }
+
+    @Override
+    public String toString() {
+        int päivä = päivämäärä.getDayOfMonth();
+        int kuukausi = päivämäärä.getMonthValue();
+        int vuosi = päivämäärä.getYear();
+
+        String merkit[] = super.toString().split("///");
+        return merkit[0]+"///"+päivä+"."+kuukausi+"."+vuosi+"///"+merkit[1];
+    }
 }

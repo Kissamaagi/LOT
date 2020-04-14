@@ -46,4 +46,14 @@ public abstract class Dokumentti {
     public String teksti() {
         return teksti;
     }
+
+    @Override
+    public String toString() {
+        return tunniste+"///"+teksti;
+    }
+
+    //@Override
+    //public boolean equals(Dokumentti eka, Dokumentti toka) {
+    //    int ekaTunniste = eka.tunniste();
+    //}
 }

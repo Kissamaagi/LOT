@@ -32,4 +32,10 @@ public class Vitsi extends Dokumentti{
     public String laji() {
         return laji;
     }
+
+    @Override
+    public String toString() {
+        String merkit[] = super.toString().split("///");
+        return merkit[0]+"///"+laji+"///"+merkit[1];
+    }
 }
