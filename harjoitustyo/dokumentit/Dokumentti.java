@@ -10,7 +10,7 @@ package harjoitustyo.dokumentit;
  * @author Miia
  */
 
-public abstract class Dokumentti {
+public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Dokumentti> {
     //Attribuutit
     private int tunniste; //Pitää olla >0
     private String teksti; //Ei null tai ""
@@ -47,11 +47,13 @@ public abstract class Dokumentti {
         return teksti;
     }
 
+    //Korvattu toString-metodi, lisää /// tunnisteen ja tekstin väliin. 
     @Override
     public String toString() {
         return tunniste+"///"+teksti;
     }
 
+    //Korvattu equals-metodi, vertailee onko Dokumentit samoja tunnisteen perusteella
     @Override
     public boolean equals(Object toinen) {
         try {
@@ -62,5 +64,19 @@ public abstract class Dokumentti {
         catch (Exception e) {
             return false;
         }      
+    }
+
+    //Korvattu compareTo-metodi joka vertailee Dokumenttien tunnisteita
+    @Override
+    public int compareTo(Dokumentti vertailtava) {
+        if (tunniste < vertailtava.tunniste()) {
+            return -1;
+        }
+        else if (tunniste == vertailtava.tunniste()) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
     }
 }

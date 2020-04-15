@@ -10,5 +10,7 @@ package harjoitustyo;
  * @author Miia
  */
 public class Oope2HT {
-    
+    public static void main(String[] args) {
+        System.out.println("Welcome to L.O.T.");
+    }
 }
