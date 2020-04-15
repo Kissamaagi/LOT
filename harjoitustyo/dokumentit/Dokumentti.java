@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package harjoitustyo.dokumentit;
+import java.util.LinkedList;
+import java.util.Arrays;
 import harjoitustyo.apulaiset.Tietoinen;
 
 /**
@@ -78,6 +80,49 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         }
         else {
             return 1;
+        }
+    }
+
+    /*
+     * Metodi tarkistaa onko parametrina annettuja hakusanoja dokumentin tekstissä
+     */
+    public boolean sanatTäsmäävät(LinkedList<String> hakusanat)
+    throws IllegalArgumentException {
+        if (hakusanat != null){
+            //Muokataan tekstistä pois välimerkit ja tehdään siitä array tarkistuksen helpottamiseksi
+            String muokattuTeksti = teksti.replace(".", "").replace(",", "");
+            String[] sanat = muokattuTeksti.split(" ");
+
+            //Käydään hakusanat läpi ja tarkistetaan onko hakusanaa tekstissä,
+            //palautetaan heti false, jos yksi hakusana ei täsmää
+            for (String hakusana : hakusanat) {
+                if (!Arrays.asList(sanat).contains(hakusana)) {
+                    return false;
+                }  
+            }
+            return true;         
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void siivoa(LinkedList<String> sulkusanat, String välimerkit)
+    throws IllegalArgumentException {
+        //Käydään välimerkit läpi ja poistetaan ne
+        String[] merkit = välimerkit.split("");
+        for (String merkki : merkit) {
+            if (teksti.contains(merkki)) {
+                teksti = teksti.replace(merkki, "");
+            }
+        }
+
+        teksti = teksti.toLowerCase();
+
+        for (String sulkusana : sulkusanat) {
+            if (teksti.contains(sulkusana)) {
+                teksti = teksti.replace(sulkusana, "");
+            }
         }
     }
 }
