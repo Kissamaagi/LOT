@@ -72,10 +72,10 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
     //Korvattu compareTo-metodi joka vertailee Dokumenttien tunnisteita
     @Override
     public int compareTo(Dokumentti vertailtava) {
-        if (tunniste < vertailtava.tunniste()) {
+        if (this.tunniste < vertailtava.tunniste()) {
             return -1;
         }
-        else if (tunniste == vertailtava.tunniste()) {
+        else if (this.tunniste == vertailtava.tunniste()) {
             return 0;
         }
         else {
@@ -119,16 +119,16 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
                 }
             }
 
+            //muutetaan teksti LinkedListiksi ja käydään läpi 
             teksti = teksti.toLowerCase();
-
-            for (String sulkusana : sulkusanat) {
-                if (teksti.contains(sulkusana)) {
-                    teksti = teksti.replace(sulkusana, "");
-                }
-            }
+            LinkedList<String> sanaLista = new LinkedList<String>(Arrays.asList(teksti.split(" ")));
+            sanaLista.removeAll(sulkusanat);
+            
+            teksti = sanaLista.toString().replace("[", "").replace("]", "").replace(",", "");
         }
         else {
             throw new IllegalArgumentException();
         }
     }
+
 }
