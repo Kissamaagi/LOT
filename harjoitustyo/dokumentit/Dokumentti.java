@@ -88,7 +88,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      */
     public boolean sanatTäsmäävät(LinkedList<String> hakusanat)
     throws IllegalArgumentException {
-        if (hakusanat != null){
+        if (hakusanat != null && hakusanat.size() > 0){
             //Muokataan tekstistä pois välimerkit ja tehdään siitä array tarkistuksen helpottamiseksi
             String muokattuTeksti = teksti.replace(".", "").replace(",", "");
             String[] sanat = muokattuTeksti.split(" ");
@@ -109,20 +109,26 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
     public void siivoa(LinkedList<String> sulkusanat, String välimerkit)
     throws IllegalArgumentException {
-        //Käydään välimerkit läpi ja poistetaan ne
-        String[] merkit = välimerkit.split("");
-        for (String merkki : merkit) {
-            if (teksti.contains(merkki)) {
-                teksti = teksti.replace(merkki, "");
+        if ((sulkusanat != null && sulkusanat.size() > 0)
+        && (välimerkit != null && välimerkit.length() > 0)) {
+            //Käydään välimerkit läpi ja poistetaan ne
+            String[] merkit = välimerkit.split("");
+            for (String merkki : merkit) {
+                if (teksti.contains(merkki)) {
+                    teksti = teksti.replace(merkki, "");
+                }
+            }
+
+            teksti = teksti.toLowerCase();
+
+            for (String sulkusana : sulkusanat) {
+                if (teksti.contains(sulkusana)) {
+                    teksti = teksti.replace(sulkusana, "");
+                }
             }
         }
-
-        teksti = teksti.toLowerCase();
-
-        for (String sulkusana : sulkusanat) {
-            if (teksti.contains(sulkusana)) {
-                teksti = teksti.replace(sulkusana, "");
-            }
+        else {
+            throw new IllegalArgumentException();
         }
     }
 }
