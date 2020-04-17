@@ -5,6 +5,8 @@
  */
 package harjoitustyo;
 import harjoitustyo.dokumentit.*;
+import harjoitustyo.omalista.OmaLista;
+
 import java.util.LinkedList;
 
 /**
@@ -15,25 +17,17 @@ public class Oope2HT {
     public static void main(String[] args) {
         System.out.println("Welcome to L.O.T.");
 
-        int uusiTunniste = 10;
-        String uusiLaji = "epidemia";
-        String uusiTeksti = "Mies meni kauppaan. Korona.";
-        Vitsi x = new Vitsi(uusiTunniste, uusiLaji, uusiTeksti);
+        OmaLista<Object> omaLista = new OmaLista();
 
-        uusiTunniste = 1;
-        uusiLaji = "hassu";
-        uusiTeksti = "Nothing sucks like a hoover.";
-        Vitsi y = new Vitsi(uusiTunniste, uusiLaji, uusiTeksti);
+        omaLista.lisää("aaa");
+        omaLista.lisää("bbb");
+        omaLista.lisää("aaa");
+        omaLista.lisää("bbb");
+        omaLista.lisää("bbb");
+        omaLista.lisää("aaa");
 
-        int vertaus = x.compareTo(y);
-
-        LinkedList<String> sulkusanat = new LinkedList<>();
-        sulkusanat.add("nothing");
-        sulkusanat.add("a");
-        String välimerkit = ".";
-
-        y.siivoa(sulkusanat, välimerkit);
-
-        System.out.println(y.teksti());
+        for (Object alkio : omaLista) {
+            System.out.println(alkio);
+        }
     }
 }

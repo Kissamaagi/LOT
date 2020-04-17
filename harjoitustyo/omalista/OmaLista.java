@@ -19,19 +19,43 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
         if (uusi != null) {
             if (this.size() == 0) {
                 this.add(uusi);
+                System.out.println("uusi lisätty: "+0);
             } 
             else {
-                for(int i = 0; i < this.size(); i++) {
-                    E temp = this.get(i);
-                    Comparable compTemp = (Comparable)temp;
-                    Comparable compUusi = (Comparable)uusi;
+                Comparable compUusi = (Comparable)uusi;
 
-                    //NÄÄ EI TOIMI, EI LISÄÄ OIKEIN, LOGIIKKAONKLEMA VISSII
-                    if (compUusi.compareTo(compTemp) == -1) {
+                for(int i = 0; i < this.size(); i++) {
+                    Comparable compTemp = (Comparable)this.get(i);
+                    
+                    //NYT EHKÄ TOIMII???   TAI EI??? 
+                    if (compTemp.compareTo(compUusi) >= 1) {
+                        System.out.println("uusi on isompi: "+i);
                         this.add(i, uusi);
+                        break;
                     }
-                    else if (compUusi.compareTo(compTemp) == 0) {
+                    else if (compTemp.compareTo(compUusi) < 0) {
+                        System.out.println("uusi on yhtäsuuri: "+i);
                         this.add(i+1, uusi);
+                        break;
+                    }
+                    /*
+                    *else if (compTemp.compareTo(compUusi) == 0) {
+                    *    System.out.println("Yhtäsuuri...");
+                    *    for(int j = i; j < this.size(); j++) {
+                    *        Comparable compYhtäsuuri = (Comparable)this.get(j);
+                    *        System.out.println(j);
+                    *        if(compYhtäsuuri.compareTo(compUusi) > 0) {
+                    *            System.out.println("uusi on samankokoinen: "+j);
+                    *            this.add(j, uusi);
+                    *            break;
+                    *        }  
+                    *    }     
+                    *}
+                    */
+                    else if (i == this.size()-1) {
+                        System.out.println("uusi on kaikkia pienempi, menee loppuun: "+i+1);
+                        this.addLast(uusi);
+                        break;
                     }
                 }
             }
