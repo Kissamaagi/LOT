@@ -1,26 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package harjoitustyo.dokumentit;
 
 /**
- *
- * @author Miia
+ * Vitsi luokka, joka on Dokumentin alaluokka. Luokassa vitseille ominaiset piirteet.
+ * 
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
+ * 
+ * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 
 public class Vitsi extends Dokumentti{
-    //Attribuutti
+    /** Vitsin laji. */
     private String laji; //Ei null tai ""
     
-    //Rakentaja
+    /**
+     * Parametrillinen rakentaja Vitseille. 
+     * 
+     * @param uusiTunniste uusi tunniste vitsille.
+     * @param uusiLaji uusi laji vitsille.
+     * @param uusiTeksti uusi teksti vitsille.
+     */
     public Vitsi(int uusiTunniste, String uusiLaji, String uusiTeksti) {
         super(uusiTunniste, uusiTeksti);
         laji(uusiLaji);
     }
 
-    //Aksessorit laji-attribuutille
+    /**
+     * Asettava aksessori vitsin lajille.
+     * laji tarkastetaan ettei se ole null tai tyhjä merkkijono.
+     * 
+     * @param uusiLaji uusi laji, joka tarkastetaan.
+     * @throws IllegalArgumentException jos parametrissa on virheitä.
+     */
     public void laji(String uusiLaji) throws IllegalArgumentException {
         if (uusiLaji != null && !uusiLaji.equals("")) {
             laji = uusiLaji;
@@ -29,10 +39,21 @@ public class Vitsi extends Dokumentti{
             throw new IllegalArgumentException();
         }
     }
+
+    /**
+     * Palauttava aksessori vitsin lajille. 
+     * 
+     * @return vitsin laji.
+     */
     public String laji() {
         return laji;
     }
 
+    /**
+     * Korvattu Object-luokan toString-metodi. 
+     * 
+     * @return Vitsin tunniste, laji ja teksti erotettuna merkeillä ///
+     */
     @Override
     public String toString() {
         String merkit[] = super.toString().split("///");

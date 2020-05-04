@@ -1,30 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package harjoitustyo.dokumentit;
+
 import java.util.LinkedList;
 import java.util.Arrays;
 import harjoitustyo.apulaiset.Tietoinen;
 
 /**
- *
- * @author Miia
+ * Abstrakti Dokumentti-luokka, jossa on dokumenteille yhteiset piirteet.
+ * 
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
+ * 
+ * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 
 public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Dokumentti> {
-    //Attribuutit
-    private int tunniste; //Pitää olla >0
-    private String teksti; //Ei null tai ""
+    /**Dokumentin tunniste. */
+    private int tunniste;
+    /**Dokumentin teksti. */
+    private String teksti;
     
-    //Rakentaja
+    /**
+     * Dokumentin parametrillinen rakentaja.
+     * 
+     * @param uusiTunniste uusi tunniste oliolle 
+     * @param uusiTeksti uusi teksti oliolle
+     */
     public Dokumentti(int uusiTunniste, String uusiTeksti){
         tunniste(uusiTunniste);
         teksti(uusiTeksti);
     }
 
-    //Aksessorit tunniste-attribuutille
+    /**
+     * Asettava aksessori tunniste-attribuutille. 
+     * Uusi tunniste tarkistetaan että se on yli 0. 
+     * 
+     * @param uusiTunniste uusi tunniste oliolle. 
+     * @throws IllegalArgumentException Jos tunniste on alle 0.
+     */
     public void tunniste(int uusiTunniste) throws IllegalArgumentException{
         if (uusiTunniste > 0) {
             tunniste = uusiTunniste;
@@ -33,11 +44,23 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             throw new IllegalArgumentException();
         }
     }
+
+    /**
+     * Palauttava aksessori tunniste-attribuutille.
+     * 
+     * @return palauttaa tunniste-attribuutin.
+     */
     public int tunniste() {
         return tunniste;
     }
 
-    //Aksessorit teksti-attribuutille
+    /**
+     * Asettava aksessori teksti-attribuutille. 
+     * Teksti tarkastetaan ettei se ole null tai tyhjä.
+     * 
+     * @param uusiTeksti uusi teksti joka tarkistetaan.
+     * @throws IllegalArgumentException jos parametri on virheellinen.
+     */
     public void teksti(String uusiTeksti) throws IllegalArgumentException{
         if (uusiTeksti != null && !uusiTeksti.equals("")){
             teksti = uusiTeksti;
@@ -46,11 +69,21 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             throw new IllegalArgumentException();
         }
     }
+
+    /**
+     * Palauttava aksessori teksti-attribuutille.
+     * 
+     * @return palauttaa teksti-attribuutin.
+     */
     public String teksti() {
         return teksti;
     }
 
-    //Korvattu toString-metodi, lisää /// tunnisteen ja tekstin väliin. 
+    /**
+     * Korvattu Object-luokan toString-metodi.
+     * 
+     * @return Dokumentin tunniste ja teksti erotettuna merkeillä ///
+     */
     @Override
     public String toString() {
         return tunniste+"///"+teksti;
@@ -69,7 +102,13 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         }      
     }
 
-    //Korvattu compareTo-metodi joka vertailee Dokumenttien tunnisteita
+    /**
+     * Korvattu Comparable-luokan compareTo-metodi.
+     * Dokumentteja vertaillaan tunnisteen mukaan. 
+     * 
+     * @param vertailtava Dokumentti johon Dokumenttia vertaillaan
+     * @return -1 jos vertailtava on pienempi, 0 jos yhtäsuuri ja 1 jos suurempi
+     */
     @Override
     public int compareTo(Dokumentti vertailtava) {
         if (this.tunniste < vertailtava.tunniste()) {
@@ -83,8 +122,8 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         }
     }
 
-    /*
-     * Metodi tarkistaa onko parametrina annettuja hakusanoja dokumentin tekstissä
+    /**
+     * @see Tietoinen#sanatTäsmäävät(LinkedList)
      */
     public boolean sanatTäsmäävät(LinkedList<String> hakusanat)
     throws IllegalArgumentException {
@@ -107,6 +146,9 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         }
     }
 
+    /**
+     * @see Tietoinen#siivoa(LinkedList, String)
+     */
     public void siivoa(LinkedList<String> sulkusanat, String välimerkit)
     throws IllegalArgumentException {
         if ((sulkusanat != null && sulkusanat.size() > 0)
@@ -127,7 +169,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             teksti = sanaLista.toString().replace("[", "").replace("]", "").replace(",", "");
         }
         else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("God is always true");
         }
     }
 

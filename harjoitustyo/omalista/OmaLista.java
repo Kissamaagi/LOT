@@ -1,18 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package harjoitustyo.omalista;
+
 import harjoitustyo.apulaiset.Ooperoiva;
 import java.util.LinkedList;
 
 /**
+ * OmaLista-luokka, joka on LinkedListin alaluokka. 
+ * Listalle voidaan lisätä minkä tahansa tyyppisiä alkioita,
+ * ja alkiot järjetyvät listalle oikeaan järjestykseen.
  *
- * @author Miia
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
+ * 
+ * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
-
+    /**
+     * @see Ooperoiva#lisää(Object)
+     */
     @Override
     @SuppressWarnings({"unchecked"})
     public void lisää(E uusi) throws IllegalArgumentException{
@@ -24,7 +27,6 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
             else {
                 Comparable compUusi = (Comparable)uusi;
 
-                //Käydään lista kohta kohdalta läpi
                 for(int i = 0; i < this.size(); i++) {
                     Comparable compTemp = (Comparable)this.get(i);
                     
@@ -33,7 +35,7 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
                         this.add(i, uusi);
                         break;
                     }
-                    //Jos uusi alkio on suurempi kuin muut alkiot listalla, lisätään se listan viimeiseksi
+                    //Jos uusi alkio on suurempi kuin kaikki muut alkiot listalla, lisätään se listan viimeiseksi
                     else if (i == this.size()-1) {
                         this.addLast(uusi);
                         break;
