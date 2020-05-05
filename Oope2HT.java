@@ -1,10 +1,15 @@
+import harjoitustyo.Kayttoliittyma;
+
 /**
+ * Harjoitustyön ajoluokka, jossa käynnistetään käyttöliittymä
+ * 
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
  *
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
-// TODO: tiedostojen lataus ohjelmaan ja kokoelmaan, virheiden käsitetly tiedostoisse
 public class Oope2HT {
     public static void main(String[] args) {
-        System.out.println("Welcome to L.O.T.");
+        Kayttoliittyma kayttis = new Kayttoliittyma(args);
+        kayttis.start();
     }
 }
