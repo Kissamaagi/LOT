@@ -1,6 +1,12 @@
 package harjoitustyo;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import harjoitustyo.dokumentit.Dokumentti;
+import harjoitustyo.dokumentit.Uutinen;
+import harjoitustyo.dokumentit.Vitsi;
 import harjoitustyo.kokoelma.Kokoelma;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -35,6 +41,8 @@ public class Kayttoliittyma {
     private boolean argsOk = false;
     /** Boolean jolla tarkastetaan että tiedostot on oikein */
     private boolean filesOk = false;
+    /** Boolean jolla tarkastetaan onko kokoelma uutisia */
+    private boolean onUutinen = false;
 
     /** 
      * Rakentaja, jossa alustetaan kokoelma, dokTiedosto ja sulkuTiedosto.
@@ -47,14 +55,14 @@ public class Kayttoliittyma {
      */
     public Kayttoliittyma(String[] args) {
         kokoelma = new Kokoelma();
-        if (args != null && args.length == 2) {
-            argsOk = true;
+        argsOk = (args != null && args.length == 2);
+        if (argsOk) {
             try {
                 dokTiedosto = new File(args[0]);
                 sulkuTiedosto = new File(args[1]);
-                if (dokTiedosto.exists() && sulkuTiedosto.exists()) {
-                    filesOk = true;
-                }
+
+                onUutinen = args[0].contains("news");
+                filesOk = (dokTiedosto.exists() && sulkuTiedosto.exists());
             }
             catch (Exception e) {
                 filesOk = false;
@@ -83,9 +91,58 @@ public class Kayttoliittyma {
         System.out.println("Program terminated.");
     }
 
+    /**
+     * Metodissa lisätään tiedostossa saadut dokumentit kokoelmaan. 
+     * Aiemmin tiedostoa lukiessa on tarkastettu onko tiedoston nimessä "news",
+     * jonka mukaan dokumentit olisivat uutisia. Tässä metodissa sen arvon mukaan
+     * tehdään dokumenteista joko uutis- tai vitsiolioita, ja lisätään kokoelmaan.
+     * 
+     * @param dokTiedosto dokumentit sisältävä tiedosto
+     */
     public void lisääKokoelmaan(File dokTiedosto) {
+        Scanner dokLukija = null;
+        try {
+            dokLukija = new Scanner(dokTiedosto);
+            while (dokLukija.hasNextLine()) {
+                String[] tempDok = dokLukija.nextLine().split("///");
+                if (onUutinen) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.uuuu");
+                    Uutinen uusi = new Uutinen(Integer.parseInt(tempDok[0]), 
+                                               LocalDate.parse(tempDok[1], formatter), 
+                                               tempDok[2]);
+                    kokoelma.lisää(uusi);
+                }
+                else {
+                    Vitsi uusi = new Vitsi(Integer.parseInt(tempDok[0]), 
+                                           tempDok[1], 
+                                           tempDok[2]);
+                    kokoelma.lisää(uusi);
+                }
+            }
+        }
+        catch (Exception e) {
+            dokLukija.close();
+        }
     }
 
+    /**
+     * Metodissa lisätään tiedostosta sulkusanat sulkusanalistaan
+     * 
+     * @param sulkuTiedosto sulkusanat sisältävä tiedosto
+     */
     public void luoSulkusanaLista(File sulkuTiedosto) {
+        sulkusanat = new LinkedList<String>();
+        Scanner sulkuLukija = null;
+        try {
+            sulkuLukija = new Scanner(sulkuTiedosto);
+
+            while (sulkuLukija.hasNextLine()) {
+                sulkusanat.add(sulkuLukija.nextLine());
+            }
+            sulkuLukija.close();
+        }
+        catch (Exception e) {
+            sulkuLukija.close();
+        }
     }
 }
