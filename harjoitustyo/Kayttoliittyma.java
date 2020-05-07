@@ -119,7 +119,8 @@ public class Kayttoliittyma {
                     case "polish": if (echo) {echo(komento);}
                                    esikasittely(komennot);
                                    break;
-                    default: oletTehnytVirheitaPoika();
+                    default: if (echo) {echo(komento);}
+                             oletTehnytVirheitaPoika();
                              break;
                 }
             }
@@ -341,6 +342,9 @@ public class Kayttoliittyma {
             else {
                 oletTehnytVirheitaPoika();
             }
+        }
+        else {
+            oletTehnytVirheitaPoika();
         }
 
     }
