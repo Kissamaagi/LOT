@@ -91,37 +91,51 @@ public class Kayttoliittyma {
             boolean echo = false;
             while (jatkuu) {
                 System.out.println("Please, enter a command:");
-                String[] komennot = inputReader.nextLine().split(" ");
+                String komento = inputReader.nextLine();
+                String[] komennot = komento.split(" ");
 
                 switch (komennot[0]) {
-                    case "quit": jatkuu = false;
+                    case "quit": if (echo) {echo(komento);}
+                                 jatkuu = false;
                                  break;
                     case "echo": echo = !echo; 
+                                 if (echo) {echo(komento);}
                                  break;
-                    case "print": tulosta(komennot);
+                    case "print": if (echo) {echo(komento);}
+                                  tulosta(komennot);
                                   break;
-                    case "reset": reset(komennot);
+                    case "reset": if (echo) {echo(komento);}
+                                  reset(komennot);
                                   break;
-                    case "add": lisääKokoelmaan(komennot);
+                    case "add": if (echo) {echo(komento);}
+                                lisääKokoelmaan(komennot);
                                 break;
-                    case "remove": poistaKokoelmasta(komennot);
+                    case "remove": if (echo) {echo(komento);}
+                                   poistaKokoelmasta(komennot);
                                    break;
-                    case "find": hae(komennot);
+                    case "find": if (echo) {echo(komento);}
+                                 hae(komennot);
                                  break;
-                    case "polish": esikasittely(komennot);
+                    case "polish": if (echo) {echo(komento);}
+                                   esikasittely(komennot);
                                    break;
                     default: oletTehnytVirheitaPoika();
                              break;
-                }
-
-                if (echo) {
-                    System.out.println(komennot[0]);
                 }
             }
             inputReader.close();
         }
         
         System.out.println("Program terminated.");
+    }
+
+    /**
+     * Metodi kaiuttaa käyttäjän antaman komennon.
+     * 
+     * @param komento käyttäjän antama komento.
+     */
+    public void echo(String komento) {
+        System.out.println(komento);
     }
 
     /**
