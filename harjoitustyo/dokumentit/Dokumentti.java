@@ -128,9 +128,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
     public boolean sanatTäsmäävät(LinkedList<String> hakusanat)
     throws IllegalArgumentException {
         if (hakusanat != null && hakusanat.size() > 0){
-            //Muokataan tekstistä pois välimerkit ja tehdään siitä array tarkistuksen helpottamiseksi
-            String muokattuTeksti = teksti.replace(".", "").replace(",", "");
-            String[] sanat = muokattuTeksti.split(" ");
+            String[] sanat = teksti.split(" ");
 
             //Käydään hakusanat läpi ja tarkistetaan onko hakusanaa tekstissä,
             //palautetaan heti false, jos yksi hakusana ei täsmää
