@@ -1,6 +1,7 @@
 package harjoitustyo.dokumentit;
 
 import java.util.LinkedList;
+import java.util.TreeMap;
 import java.util.Arrays;
 import harjoitustyo.apulaiset.Tietoinen;
 
@@ -158,7 +159,6 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
                     teksti = teksti.replace(merkki, "");
                 }
             }
-
             //muutetaan teksti LinkedListiksi ja käydään läpi 
             LinkedList<String> sanaLista = new LinkedList<String>(Arrays.asList(teksti.toLowerCase().split(" ")));
             sanaLista.removeAll(sulkusanat);
@@ -173,12 +173,40 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
                     tekstiRakentaja.append(" " + sanaLista.get(i).trim());
                 }
             }
-            
             teksti = tekstiRakentaja.toString().trim().replace("  ", " ");
         }
         else {
             throw new IllegalArgumentException();
         }
+    }
+
+    /**
+     * Metodi jolla lasketaan dokumentin tekstin sanamäärä.
+     * 
+     * @return sanojen määrä dokumentissa
+     */
+    public int laskeSanat() {
+        String[] sanaLista = teksti.split(" ");
+        return sanaLista.length;
+    }
+
+    /**
+     * @see Tietoinen#laskeFrekvenssit()
+     */
+    public TreeMap<String, Integer> laskeFrekvenssit() {
+        TreeMap<String, Integer> frekvenssit = new TreeMap<String, Integer>();
+
+        String[] sanaLista = teksti.split(" ");
+        for (String sana : sanaLista) {
+            if (!frekvenssit.containsKey(sana)) {
+                frekvenssit.put(sana, 1);
+            }
+            else {
+                Integer val = frekvenssit.get(sana);
+                frekvenssit.replace(sana, val+1);
+            }
+        }
+        return frekvenssit;
     }
 
 }

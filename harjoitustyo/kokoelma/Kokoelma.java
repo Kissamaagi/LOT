@@ -2,6 +2,10 @@ package harjoitustyo.kokoelma;
 
 import harjoitustyo.omalista.OmaLista;
 import harjoitustyo.dokumentit.*;
+
+import java.util.Comparator;
+import java.util.TreeMap;
+
 import harjoitustyo.apulaiset.Kokoava;
 /**
  * Kokoelma-luokka, jonka mukaan vodiaan luoda kokoelma Dokumenteille.
@@ -52,6 +56,52 @@ public class Kokoelma extends Object implements Kokoava<Dokumentti> {
             }
         }
         return null;
+    }
+
+    /**
+     * Metodi joka laskee koko kokoelman sanojen frekvenssit.
+     * 
+     * @return TreeMap jossa avaimina sanat ja arvoina frekvenssit
+     */
+    public TreeMap<String, Integer> laskeFrekvenssit() {
+        TreeMap<String, Integer> frekvenssit = new TreeMap<String, Integer>();
+
+        for (Dokumentti dok : dokumentit) {
+            TreeMap<String, Integer> dokFreqs = dok.laskeFrekvenssit();
+            for (String key : dokFreqs.keySet()) {
+                if (!frekvenssit.containsKey(key)) {
+                    frekvenssit.put(key, dokFreqs.get(key));
+                }
+                else {
+                    Integer val = frekvenssit.get(key);
+                    frekvenssit.replace(key, val+1);
+                }
+            }
+        }
+        return frekvenssit;
+    }
+
+    /**
+     * Kokoelma lajitellaan annetun tyypin mukaan. Tyypin mukaan luodaan comparator, joka 
+     * annetaam parametriksi OmaListan omaan lajittele-metodiin. 
+     * 
+     * @param lajitteluTyyppi tyyppi jonka mukaan lajitellaan.
+     */
+    public void lajittele(String lajitteluTyyppi) {
+        switch (lajitteluTyyppi) {
+            case "id": 
+                Comparator<Dokumentti> tunniste = Comparator.comparing(Dokumentti::tunniste);
+                dokumentit.lajittele(tunniste);
+                break;
+            case "type":
+                Comparator<Dokumentti> tyyppi = Comparator.comparing(Dokumentti -> ((Vitsi)Dokumentti).laji());
+                dokumentit.lajittele(tyyppi);
+                break;
+            case "date":
+                Comparator<Dokumentti> pvm = Comparator.comparing(Dokumentti -> ((Uutinen)Dokumentti).päivämäärä());
+                dokumentit.lajittele(pvm);
+                break;
+        }
     }
 
     /**

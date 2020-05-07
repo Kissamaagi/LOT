@@ -1,6 +1,8 @@
 package harjoitustyo.omalista;
 
 import harjoitustyo.apulaiset.Ooperoiva;
+
+import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
@@ -46,6 +48,19 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
         else {
             throw new IllegalArgumentException();
         }
+    }
+
+    /**
+     * @see Ooperoiva#lajittele(Comparator)
+     */
+    public void lajittele(Comparator<? super E> vertailija)
+    throws IllegalArgumentException {
+      if (vertailija != null) {
+        this.sort(vertailija);
+      }
+      else {
+          throw new IllegalArgumentException();
+      }
     }
     
 }

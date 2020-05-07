@@ -12,6 +12,7 @@ import harjoitustyo.kokoelma.Kokoelma;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * Harjoitustyön Käyttöliittymä-luokka. Luokassa tapahtuu kaikki interaktio
@@ -95,33 +96,53 @@ public class Kayttoliittyma {
                 String[] komennot = komento.split(" ");
 
                 switch (komennot[0]) {
-                    case "quit": if (echo) {echo(komento);}
-                                 jatkuu = false;
-                                 break;
-                    case "echo": echo = !echo; 
-                                 if (echo) {echo(komento);}
-                                 break;
-                    case "print": if (echo) {echo(komento);}
-                                  tulosta(komennot);
-                                  break;
-                    case "reset": if (echo) {echo(komento);}
-                                  reset(komennot);
-                                  break;
-                    case "add": if (echo) {echo(komento);}
-                                lisääKokoelmaan(komennot);
-                                break;
-                    case "remove": if (echo) {echo(komento);}
-                                   poistaKokoelmasta(komennot);
-                                   break;
-                    case "find": if (echo) {echo(komento);}
-                                 hae(komennot);
-                                 break;
-                    case "polish": if (echo) {echo(komento);}
-                                   esikasittely(komennot);
-                                   break;
-                    default: if (echo) {echo(komento);}
-                             oletTehnytVirheitaPoika();
-                             break;
+                    case "quit": 
+                        if (echo) {echo(komento);}
+                        jatkuu = false;
+                        break;
+                    case "echo": 
+                        echo = !echo; 
+                        if (echo) {echo(komento);}
+                        break;
+                    case "print": 
+                        if (echo) {echo(komento);}
+                        tulosta(komennot);
+                        break;
+                    case "reset": 
+                        if (echo) {echo(komento);}
+                        reset(komennot);
+                        break;
+                    case "add": 
+                        if (echo) {echo(komento);}
+                        lisääKokoelmaan(komennot);
+                        break;
+                    case "remove": 
+                        if (echo) {echo(komento);}
+                        poistaKokoelmasta(komennot);
+                        break;
+                    case "find": 
+                        if (echo) {echo(komento);}
+                        hae(komennot);
+                        break;
+                    case "polish": 
+                        if (echo) {echo(komento);}
+                        esikasittely(komennot);
+                        break;
+                    case "freqs":
+                        if (echo) {echo(komento);}
+                        frekvenssit(komennot);
+                        break;
+                    case "sort":
+                        if (echo) {echo(komento);}
+                        lajittele(komennot);
+                        break;
+                    case "pprint":
+                        if (echo) {echo(komento);}
+                        break;
+                    default: 
+                        if (echo) {echo(komento);}
+                        oletTehnytVirheitaPoika();
+                        break;
                 }
             }
             inputReader.close();
@@ -370,6 +391,84 @@ public class Kayttoliittyma {
     } 
 
     /**
+     * Metodi laskee kokoelman kaikkien sanojen frekvenssit, tai vain yhden annetun 
+     * dokumentin sanojen frekvenssit.
+     * 
+     * @param komennot käyttäjän antamat komennot.
+     */
+    public void frekvenssit(String[] komennot) {
+        if (komennot.length == 2) {
+            int tunniste = onkoNumero(komennot[1]);
+
+            if (tunniste != 0) {
+                Dokumentti laskettava = kokoelma.hae(tunniste);
+                TreeMap<String, Integer> frekvenssit = laskettava.laskeFrekvenssit();
+
+                for (String key : frekvenssit.keySet()) {
+                    System.out.println(key + " " + frekvenssit.get(key));
+                }
+                int sanamäärä = laskettava.laskeSanat();
+                System.out.println("A total of "+sanamäärä+" words.");
+            }
+            else {
+                oletTehnytVirheitaPoika();
+            }
+        }
+        else if (komennot.length == 1) {
+            int sanamäärä = 0;
+            TreeMap<String, Integer> frekvenssit = kokoelma.laskeFrekvenssit();
+
+            for (Dokumentti laskettava : kokoelma.dokumentit()) {
+                sanamäärä = sanamäärä + laskettava.laskeSanat();
+            }
+            for (String key : frekvenssit.keySet()) {
+                System.out.println(key + " " + frekvenssit.get(key));
+            }
+            System.out.println("A total of "+sanamäärä+" words.");
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    }
+
+    /**
+     * Metodi joka lajittelee kokoelman uudestaan käyttäjän komennon kanssa antaman parametrin mukaan
+     * 
+     * @param komennot käyttäjän antamat komennot
+     */
+    public void lajittele(String[] komennot) {
+        if (komennot.length == 2) {
+            String lajitteluTyyppi = komennot[1];
+            
+            if (lajitteluTyyppi.equals("id")){
+                kokoelma.lajittele(lajitteluTyyppi);
+            }
+            else if (lajitteluTyyppi.equals("type")) {
+                if (!onUutinen) {
+                    kokoelma.lajittele(lajitteluTyyppi);
+                }
+                else {
+                    oletTehnytVirheitaPoika();
+                }
+            }
+            else if (lajitteluTyyppi.equals("date")) {
+                if (onUutinen) {
+                    kokoelma.lajittele(lajitteluTyyppi);
+                }
+                else {
+                    oletTehnytVirheitaPoika();
+                }
+            }
+            else {
+                oletTehnytVirheitaPoika();
+            }
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    }
+
+    /**
      * Metodi poistaa aiemmat muutokset ja lataa dokumentit uudelleen kokoelmaan.
      * Virheilmoitus tulee, jos käyttäjä on antanut reset-komennon lisäksi 
      * ylimääräisiä parametrejä.
@@ -403,6 +502,9 @@ public class Kayttoliittyma {
         }
     }
 
+    /**
+     * Metodi tulostaa virheilmoituksen
+     */
     public void oletTehnytVirheitaPoika() {
         System.out.println("Error!");
     }
