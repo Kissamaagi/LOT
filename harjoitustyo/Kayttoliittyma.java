@@ -195,9 +195,10 @@ public class Kayttoliittyma {
      */
     public void luoUutinen(String[] uusiUutinen) {
         try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.uuuu");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.uuuu");
+        LocalDate pvm = LocalDate.parse(uusiUutinen[1], formatter);
         Uutinen uusi = new Uutinen(Integer.parseInt(uusiUutinen[0]), 
-                                    LocalDate.parse(uusiUutinen[1], formatter), 
+                                    pvm, 
                                     uusiUutinen[2]);
         kokoelma.lisää(uusi);
         }
