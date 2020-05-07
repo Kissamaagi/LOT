@@ -160,14 +160,24 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             }
 
             //muutetaan teksti LinkedListiksi ja käydään läpi 
-            teksti = teksti.toLowerCase();
-            LinkedList<String> sanaLista = new LinkedList<String>(Arrays.asList(teksti.split(" ")));
+            LinkedList<String> sanaLista = new LinkedList<String>(Arrays.asList(teksti.toLowerCase().split(" ")));
             sanaLista.removeAll(sulkusanat);
+
+            StringBuilder tekstiRakentaja = new StringBuilder();
+
+            for (int i = 0; i < sanaLista.size(); i++) {
+                if (i == 0){
+                    tekstiRakentaja.append(sanaLista.get(i));
+                }
+                else {
+                    tekstiRakentaja.append(" " + sanaLista.get(i));
+                }
+            }
             
-            teksti = sanaLista.toString().replace("[", "").replace("]", "").replace(",", "");
+            teksti = tekstiRakentaja.toString();
         }
         else {
-            throw new IllegalArgumentException("God is always true");
+            throw new IllegalArgumentException();
         }
     }
 
