@@ -93,10 +93,6 @@ public class Kayttoliittyma {
                 System.out.println("Please, enter a command:");
                 String[] komennot = inputReader.nextLine().split(" ");
 
-                if (echo) {
-                    System.out.println(komennot[0]);
-                }
-
                 switch (komennot[0]) {
                     case "quit": jatkuu = false;
                                  break;
@@ -116,6 +112,10 @@ public class Kayttoliittyma {
                                    break;
                     default: oletTehnytVirheitaPoika();
                              break;
+                }
+
+                if (echo) {
+                    System.out.println(komennot[0]);
                 }
             }
             inputReader.close();
