@@ -53,5 +53,19 @@ public class Kokoelma extends Object implements Kokoava<Dokumentti> {
         }
         return null;
     }
-    
+
+    /**
+     * Metodi, jolla voi poistaa kokoelmasta tietyn dokumentin tunnisteen perusteella
+     * 
+     * @param tunniste poistettavan dokumentin tunniste
+     */
+    public void poista(int tunniste) {
+        Dokumentti poistettava = this.hae(tunniste);
+        if (poistettava != null) {
+            dokumentit.remove(poistettava);
+        }
+        else {
+            throw new IllegalArgumentException();
+        }  
+    }   
 }

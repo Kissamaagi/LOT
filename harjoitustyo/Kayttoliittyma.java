@@ -3,15 +3,15 @@ package harjoitustyo;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import harjoitustyo.dokumentit.Dokumentti;
 import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
 import harjoitustyo.kokoelma.Kokoelma;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
-
-//TODO: polish, add, remove, find
-//TODO: add-komento: dokumentin tyypin tarkistus, lisääminen 
 
 /**
  * Harjoitustyön Käyttöliittymä-luokka. Luokassa tapahtuu kaikki interaktio
@@ -104,15 +104,17 @@ public class Kayttoliittyma {
                                  break;
                     case "print": tulosta(komennot);
                                   break;
-                    case "reset": lisääKokoelmaan(dokTiedosto);
-                                  luoSulkusanaLista(sulkuTiedosto);
+                    case "reset": reset(komennot);
                                   break;
                     case "add": lisääKokoelmaan(komennot);
                                 break;
-                    case "remove":
-                    case "find":
-                    case "polish":
-                    default: System.out.println("Error!");
+                    case "remove": poistaKokoelmasta(komennot);
+                                   break;
+                    case "find": hae(komennot);
+                                 break;
+                    case "polish": esikasittely(komennot);
+                                   break;
+                    default: oletTehnytVirheitaPoika();
                              break;
                 }
             }
@@ -125,8 +127,8 @@ public class Kayttoliittyma {
     /**
      * Metodissa lisätään tiedostossa saadut dokumentit kokoelmaan. 
      * Aiemmin tiedostoa lukiessa on tarkastettu onko tiedoston nimessä "news",
-     * jonka mukaan dokumentit olisivat uutisia. Tässä metodissa sen arvon mukaan
-     * tehdään dokumenteista joko uutis- tai vitsiolioita, ja lisätään kokoelmaan.
+     * jonka mukaan dokumentit olisivat uutisia. Metodista kutsutaan uutis- tai vitsi-
+     * olioita luovia metodeja sen mukaan, mitä kokoelmalle asetetaan. 
      * 
      * @param dokTiedosto dokumentit sisältävä tiedosto
      */
@@ -137,17 +139,10 @@ public class Kayttoliittyma {
             while (dokLukija.hasNextLine()) {
                 String[] tempDok = dokLukija.nextLine().split("///");
                 if (onUutinen) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.uuuu");
-                    Uutinen uusi = new Uutinen(Integer.parseInt(tempDok[0]), 
-                                               LocalDate.parse(tempDok[1], formatter), 
-                                               tempDok[2]);
-                    kokoelma.lisää(uusi);
+                    luoUutinen(tempDok);
                 }
                 else {
-                    Vitsi uusi = new Vitsi(Integer.parseInt(tempDok[0]), 
-                                           tempDok[1], 
-                                           tempDok[2]);
-                    kokoelma.lisää(uusi);
+                    luoVitsi(tempDok);
                 }
             }
         }
@@ -163,13 +158,84 @@ public class Kayttoliittyma {
      */
     public void lisääKokoelmaan(String[] komennot) {
         if (komennot.length >= 2) {
-            //selvitetään eka onko uutinen vai vitsi
-
-            //sitten onkoUutinen booleanin mukaan lisätään
+            String[] uusiDokumentti = kokoaDokumentti(komennot).split("///");
+            if (onUutinen) {
+                luoUutinen(uusiDokumentti);
+            }
+            else {
+                luoVitsi(uusiDokumentti);
+            }
         }
         else {
-            System.out.println("Error!");
-        }    
+            oletTehnytVirheitaPoika();
+        }
+
+            
+    }
+
+    /**
+     * Metodi luo uuden uutisolion ja lisää sen kokoelmaan.
+     * 
+     * @param uusiUutinen uutisen tiedot oikeassa järjestyksessä, String[]-tyyppi
+     */
+    public void luoUutinen(String[] uusiUutinen) {
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.uuuu");
+        Uutinen uusi = new Uutinen(Integer.parseInt(uusiUutinen[0]), 
+                                    LocalDate.parse(uusiUutinen[1], formatter), 
+                                    uusiUutinen[2]);
+        kokoelma.lisää(uusi);
+        }
+        catch (Exception e) {
+            oletTehnytVirheitaPoika();
+        }  
+    }
+
+    /**
+     * Metodi luo uuden Vitsiolion ja lisää sen kokoelmaan
+     * 
+     * @param uusiVitsi vitsin tiedot String[]-tyyppisenä, oikeassa järjestyksessä
+     */
+    public void luoVitsi(String[] uusiVitsi) {
+        try {
+            if (!uusiVitsi[1].contains(".")) {
+                Vitsi uusi = new Vitsi(Integer.parseInt(uusiVitsi[0]), 
+                                                        uusiVitsi[1], 
+                                                        uusiVitsi[2]);
+                kokoelma.lisää(uusi);
+            }
+            else {
+                oletTehnytVirheitaPoika();
+            }
+        }
+        catch (IllegalArgumentException e){
+            oletTehnytVirheitaPoika();
+        }
+        
+    }
+
+    /**
+     * Metodi kokoaa add-komentona annetusta dokumentista
+     * String-tyyppisen dokumentin
+     * 
+     * @param komennot komento arrayna, pilkottu " "-merkistä
+     * @return Dokumentti String-muodossa ilman "add"-sanaa
+     */
+    public String kokoaDokumentti(String[] komennot) {
+        LinkedList<String> uusiDokumentti = new LinkedList<String>(Arrays.asList(komennot));
+        uusiDokumentti.removeFirst();
+
+        StringBuilder dok = new StringBuilder();
+
+        for (int i = 0; i < uusiDokumentti.size(); i++) {
+            if (i == 0) {
+                dok.append(uusiDokumentti.get(i));
+            }
+            else {
+                dok.append(" " + uusiDokumentti.get(i));
+            }
+        }
+        return dok.toString();
     }
 
     /**
@@ -194,6 +260,47 @@ public class Kayttoliittyma {
     }
 
     /**
+     * Metodi jolla poistetaan tietty dokumentti tunnisteen perusteella kokoelmasta.
+     * 
+     * @param komennot käyttäjän antamat komennot String[]-muodossa
+     */
+    public void poistaKokoelmasta(String[] komennot) {
+        if (komennot.length == 2) {
+            try {
+                int poistettavaTunnus = onkoNumero(komennot[1]);
+                kokoelma.poista(poistettavaTunnus);
+            }
+            catch (IllegalArgumentException e) {
+                oletTehnytVirheitaPoika();
+            }   
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    }
+
+    /**
+     * Metodi, joka hakee hakusanoilla dokumentteja, ja tulostaa niiden tunnisteet
+     * 
+     * @param komennot käyttäjän antamat komennot String[] muodossa
+     */
+    public void hae(String[] komennot) {
+        if (komennot.length >= 2) {
+            LinkedList<String> hakusanat = new LinkedList<String>(Arrays.asList(komennot));
+            hakusanat.removeFirst();
+
+            for (Dokumentti haettava : kokoelma.dokumentit()) {
+                if (haettava.sanatTäsmäävät(hakusanat)) {
+                    System.out.println(haettava.tunniste());
+                }
+            }
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    }
+
+    /**
      * Metodi tulostaa komennon mukaan joko yhden dokumentin tunnisteen mukaan,
      * tai kaikki kokoelman dokumentit jos tunnistetta ei ole annettu.
      * 
@@ -214,14 +321,50 @@ public class Kayttoliittyma {
                     System.out.println(tulostettava.toString());
                 }
                 else {
-                    System.out.println("Error!");
+                    oletTehnytVirheitaPoika();
                 }
             }
             else {
-                System.out.println("Error!");
+                oletTehnytVirheitaPoika();
             }
         }
 
+    }
+
+    /**
+     * Metodi esikäsittelee kokoelman poistamalla käyttäjän antamat välimerkit,
+     * laittamalla kaiken pieniksi kirjaimiksi ja poistamalla sulkusanalistan sanat.
+     * 
+     * @param komennot käyttäjän antamat komennot
+     */
+    public void esikasittely(String[] komennot) {
+        if (komennot.length == 2) {
+            String välimerkit = komennot[1];
+
+            for (Dokumentti siivottava : kokoelma.dokumentit()) {
+                siivottava.siivoa(sulkusanat, välimerkit);
+            }
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    } 
+
+    /**
+     * Metodi poistaa aiemmat muutokset ja lataa dokumentit uudelleen kokoelmaan.
+     * Virheilmoitus tulee, jos käyttäjä on antanut reset-komennon lisäksi 
+     * ylimääräisiä parametrejä.
+     * 
+     * @param komennot käyttäjän antamat komennot.
+     */
+    public void reset(String[] komennot) {
+        if (komennot.length == 1) {
+            kokoelma.dokumentit().clear();
+            lisääKokoelmaan(dokTiedosto);
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }   
     }
 
     /**
@@ -239,5 +382,9 @@ public class Kayttoliittyma {
         catch (Exception e) {
             return 0;
         }
+    }
+
+    public void oletTehnytVirheitaPoika() {
+        System.out.println("Error!");
     }
 }
