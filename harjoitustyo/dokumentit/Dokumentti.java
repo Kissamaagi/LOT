@@ -167,14 +167,14 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
             for (int i = 0; i < sanaLista.size(); i++) {
                 if (i == 0){
-                    tekstiRakentaja.append(sanaLista.get(i));
+                    tekstiRakentaja.append(sanaLista.get(i).trim());
                 }
                 else {
-                    tekstiRakentaja.append(" " + sanaLista.get(i));
+                    tekstiRakentaja.append(" " + sanaLista.get(i).trim());
                 }
             }
             
-            teksti = tekstiRakentaja.toString();
+            teksti = tekstiRakentaja.toString().trim().replace("  ", " ");
         }
         else {
             throw new IllegalArgumentException();

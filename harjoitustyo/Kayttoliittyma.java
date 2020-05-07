@@ -359,7 +359,6 @@ public class Kayttoliittyma {
     public void esikasittely(String[] komennot) {
         if (komennot.length == 2) {
             String välimerkit = komennot[1];
-            System.out.println(välimerkit);
 
             for (Dokumentti siivottava : kokoelma.dokumentit()) {
                 siivottava.siivoa(sulkusanat, välimerkit);
