@@ -416,11 +416,11 @@ public class Kayttoliittyma {
                         (tulostettuPituus + tulostettavaTeksti[i].length() 
                         + tulostettavaTeksti[i+1].length()) > riviLeveys) {
                         System.out.print(tulostettavaTeksti[i]);
-                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()
+                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length();
                     }
                     else if (i == tulostettavaTeksti.length-1) {
                         System.out.print(tulostettavaTeksti[i]);
-                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()
+                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length();
                     }
                     else {
                         System.out.print(tulostettavaTeksti[i] + " ");
