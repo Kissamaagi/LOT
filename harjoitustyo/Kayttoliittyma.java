@@ -8,7 +8,6 @@ import harjoitustyo.dokumentit.Dokumentti;
 import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
 import harjoitustyo.kokoelma.Kokoelma;
-import jdk.nashorn.internal.runtime.regexp.joni.ast.QuantifierNode;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -413,7 +412,13 @@ public class Kayttoliittyma {
 
             for (int i = 0; i < tulostettavaTeksti.length; i++) {
                 if ((tulostettuPituus + tulostettavaTeksti[i].length()) < riviLeveys) {
-                    System.out.print(tulostettavaTeksti[i] + " ");
+                    if (!(i == tulostettavaTeksti.length-1) &&
+                        (tulostettuPituus + tulostettavaTeksti[i].length() + tulostettavaTeksti[i+1].length()) > riviLeveys) {
+                        System.out.print(tulostettavaTeksti[i]);
+                    }
+                    else {
+                        System.out.print(tulostettavaTeksti[i] + " ");
+                    }
                     tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
                 }
                 else {
