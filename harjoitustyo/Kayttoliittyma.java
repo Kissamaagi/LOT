@@ -8,6 +8,7 @@ import harjoitustyo.dokumentit.Dokumentti;
 import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
 import harjoitustyo.kokoelma.Kokoelma;
+import jdk.nashorn.internal.runtime.regexp.joni.ast.QuantifierNode;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -138,6 +139,7 @@ public class Kayttoliittyma {
                         break;
                     case "pprint":
                         if (echo) {echo(komento);}
+                        riviTulostusInit(komennot);
                         break;
                     default: 
                         if (echo) {echo(komento);}
@@ -371,6 +373,59 @@ public class Kayttoliittyma {
 
     }
 
+    public void riviTulostusInit(String[] komennot) {
+        if (komennot.length == 2) {
+            int riviLeveys = onkoNumero(komennot[1]);
+            if (riviLeveys > 0 ) {
+                for (Dokumentti dok : kokoelma.dokumentit()) {
+                    int tunnus = dok.tunniste();
+                    tulostaRivittain(riviLeveys, tunnus);
+                }
+            }
+            else {
+                oletTehnytVirheitaPoika();
+            }
+        }
+        else if (komennot.length == 3) {
+            int riviLeveys = onkoNumero(komennot[1]);
+            int tunnus = onkoNumero(komennot[2]);
+            if (riviLeveys > 0 && tunnus > 0) {
+                tulostaRivittain(riviLeveys, tunnus);
+            }
+            else {
+                oletTehnytVirheitaPoika();
+            }  
+        }
+        else {
+            oletTehnytVirheitaPoika();
+        }
+    }
+
+    /**
+     * Metodi tulostaa yhden dokumentin rivittäin, käyttäjän määrittelemän rivileveyden mukaan
+     * 
+     * @param rivileveys
+     * @param tunnus
+     */
+    public void tulostaRivittain(int riviLeveys, int tunnus) {
+            String[] tulostettavaTeksti = kokoelma.hae(tunnus).toString().split(" ");
+            int tulostettuPituus = 0;
+
+            for (int i = 0; i < tulostettavaTeksti.length; i++) {
+                if ((tulostettuPituus + tulostettavaTeksti[i].length()) < riviLeveys) {
+                    System.out.print(tulostettavaTeksti[i] + " ");
+                    tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
+                }
+                else {
+                    System.out.println();
+                    tulostettuPituus = 0;
+                    System.out.print(tulostettavaTeksti[i] + " ");
+                    tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
+                }
+            }
+            System.out.println();
+    }
+
     /**
      * Metodi esikäsittelee kokoelman poistamalla käyttäjän antamat välimerkit,
      * laittamalla kaiken pieniksi kirjaimiksi ja poistamalla sulkusanalistan sanat.
@@ -439,7 +494,7 @@ public class Kayttoliittyma {
     public void lajittele(String[] komennot) {
         if (komennot.length == 2) {
             String lajitteluTyyppi = komennot[1];
-            
+
             if (lajitteluTyyppi.equals("id")){
                 kokoelma.lajittele(lajitteluTyyppi);
             }
