@@ -413,10 +413,12 @@ public class Kayttoliittyma {
             for (int i = 0; i < tulostettavaTeksti.length; i++) {
                 if ((tulostettuPituus + tulostettavaTeksti[i].length()) <= riviLeveys) {
                     if (!(i == tulostettavaTeksti.length-1) &&
-                        (tulostettuPituus + tulostettavaTeksti[i].length() 
-                        + tulostettavaTeksti[i+1].length()) > riviLeveys) {
+                        (tulostettuPituus + ((tulostettavaTeksti[i].length()+1) 
+                        + (tulostettavaTeksti[i+1].length()))) > riviLeveys) {
                         System.out.print(tulostettavaTeksti[i]);
-                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length();
+                        //System.out.print(tulostettavaTeksti[i].length()+1);
+                        //System.out.print(tulostettavaTeksti[i+1].length()+1);
+                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
                     }
                     else if (i == tulostettavaTeksti.length-1) {
                         System.out.print(tulostettavaTeksti[i]);
