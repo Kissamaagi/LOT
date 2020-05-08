@@ -73,8 +73,9 @@ public class Kokoelma extends Object implements Kokoava<Dokumentti> {
                     frekvenssit.put(key, dokFreqs.get(key));
                 }
                 else {
+                    Integer addVal = dokFreqs.get(key);
                     Integer val = frekvenssit.get(key);
-                    frekvenssit.replace(key, val+1);
+                    frekvenssit.replace(key, val+addVal);
                 }
             }
         }
