@@ -372,6 +372,13 @@ public class Kayttoliittyma {
 
     }
 
+    /**
+     * Metodi joka ottaa käyttäjältä parametrit liittyen rivittäin tulostukseen,
+     * ja sen mukaan tulostaa joko kokoelman kaikki dokumentit rivittäin tai 
+     * vain yhden dokumentin. 
+     * 
+     * @param komennot käyttäjän antamat komennot.
+     */
     public void riviTulostusInit(String[] komennot) {
         if (komennot.length == 2) {
             int riviLeveys = onkoNumero(komennot[1]);
