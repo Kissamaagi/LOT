@@ -417,6 +417,9 @@ public class Kayttoliittyma {
                         + tulostettavaTeksti[i+1].length()) > riviLeveys) {
                         System.out.print(tulostettavaTeksti[i]);
                     }
+                    else if (i == tulostettavaTeksti.length-1) {
+                        System.out.print(tulostettavaTeksti[i]);
+                    }
                     else {
                         System.out.print(tulostettavaTeksti[i] + " ");
                     }
