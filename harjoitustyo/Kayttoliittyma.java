@@ -430,8 +430,14 @@ public class Kayttoliittyma {
                 else {
                     System.out.println();
                     tulostettuPituus = 0;
-                    System.out.print(tulostettavaTeksti[i] + " ");
-                    tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
+                    if (i == tulostettavaTeksti.length-1) {
+                        System.out.print(tulostettavaTeksti[i]);
+                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length();
+                    }
+                    else {
+                        System.out.print(tulostettavaTeksti[i] + " ");
+                        tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
+                    }
                 }
             }
             System.out.println();
