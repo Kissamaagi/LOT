@@ -413,7 +413,8 @@ public class Kayttoliittyma {
             for (int i = 0; i < tulostettavaTeksti.length; i++) {
                 if ((tulostettuPituus + tulostettavaTeksti[i].length()) < riviLeveys) {
                     if (!(i == tulostettavaTeksti.length-1) &&
-                        (tulostettuPituus + tulostettavaTeksti[i].length() + tulostettavaTeksti[i+1].length()) > riviLeveys) {
+                        (tulostettuPituus + tulostettavaTeksti[i].length() 
+                        + tulostettavaTeksti[i+1].length()) > riviLeveys) {
                         System.out.print(tulostettavaTeksti[i]);
                     }
                     else {
