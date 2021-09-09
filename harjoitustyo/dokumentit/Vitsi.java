@@ -2,9 +2,9 @@ package harjoitustyo.dokumentit;
 
 /**
  * Vitsi luokka, joka on Dokumentin alaluokka. Luokassa vitseille ominaiset piirteet.
- * 
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- * 
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 

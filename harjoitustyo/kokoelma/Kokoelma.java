@@ -9,9 +9,9 @@ import java.util.TreeMap;
 import harjoitustyo.apulaiset.Kokoava;
 /**
  * Kokoelma-luokka, jonka mukaan vodiaan luoda kokoelma Dokumenteille.
- *
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- * 
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class Kokoelma extends Object implements Kokoava<Dokumentti> {

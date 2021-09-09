@@ -9,9 +9,9 @@ import java.util.LinkedList;
  * OmaLista-luokka, joka on LinkedListin alaluokka. 
  * Listalle voidaan lisätä minkä tahansa tyyppisiä alkioita,
  * ja alkiot järjetyvät listalle oikeaan järjestykseen.
- *
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- * 
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {

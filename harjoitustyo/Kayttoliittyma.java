@@ -18,9 +18,9 @@ import java.util.TreeMap;
  * Harjoitustyön Käyttöliittymä-luokka. Luokassa tapahtuu kaikki interaktio
  * käyttäjän kanssa. Luokasta ajetaan myös muiden luokkien metodeja, erityisesti
  * Kokoelma-luokan.
- * 
+ * <p>
  * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
- *
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class Kayttoliittyma {
@@ -410,8 +410,8 @@ public class Kayttoliittyma {
     /**
      * Metodi tulostaa yhden dokumentin rivittäin, käyttäjän määrittelemän rivileveyden mukaan
      * 
-     * @param rivileveys
-     * @param tunnus
+     * @param riviLeveys tulostettavan rivin leveys
+     * @param tunnus tulostettavan dokumentin tunniste
      */
     public void tulostaRivittain(int riviLeveys, int tunnus) {
             String[] tulostettavaTeksti = kokoelma.hae(tunnus).toString().split(" ");
@@ -423,8 +423,6 @@ public class Kayttoliittyma {
                         (tulostettuPituus + ((tulostettavaTeksti[i].length()+1) 
                         + (tulostettavaTeksti[i+1].length()))) > riviLeveys) {
                         System.out.print(tulostettavaTeksti[i]);
-                        //System.out.print(tulostettavaTeksti[i].length()+1);
-                        //System.out.print(tulostettavaTeksti[i+1].length()+1);
                         tulostettuPituus = tulostettuPituus + tulostettavaTeksti[i].length()+1;
                     }
                     else if (i == tulostettavaTeksti.length-1) {

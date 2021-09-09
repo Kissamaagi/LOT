@@ -2,9 +2,9 @@ import harjoitustyo.Kayttoliittyma;
 
 /**
  * Harjoitustyön ajoluokka, jossa käynnistetään käyttöliittymä
- * 
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- *
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class Oope2HT {

@@ -7,9 +7,9 @@ import harjoitustyo.apulaiset.Tietoinen;
 
 /**
  * Abstrakti Dokumentti-luokka, jossa on dokumenteille yhteiset piirteet.
- * 
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- * 
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 

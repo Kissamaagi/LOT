@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 /**
  * Uutinen luokka, joka on Dokumentin alaluokka. Luokassa uutisille ominaiset piirteet.
- * 
- * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020
- * 
+ * <p>
+ * Harjoitustyö, Olio-ohjelmoinnin perusteet, kevät 2020 
+ * <p>
  * @author Miia Pynnönen (miia.pynnonen@tuni.fi)
  */
 public class Uutinen extends Dokumentti {
